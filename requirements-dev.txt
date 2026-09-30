@@ -1,0 +1,6 @@
+# only needed to regenerate the dataset (datagen/build.py)
+-r requirements.txt
+numpy
+pillow
+scipy
+pyproj

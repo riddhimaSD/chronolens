@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ChronoLens</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23ffb020' stroke-width='3'/%3E%3Cpath d='M6 20 L12 17 L17 12 L26 11' fill='none' stroke='%23dfe6ee' stroke-width='2'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="/static/vendor/maplibre-gl.css">
+<link rel="stylesheet" href="/static/css/app.css">
+</head>
+<body class="view-explore lens-chronolens">
+
+<header id="top">
+  <div class="brand">
+    <svg viewBox="0 0 32 32" width="26" height="26" aria-hidden="true"><circle cx="16" cy="16" r="12" fill="none" stroke="#ffb020" stroke-width="2.4" stroke-dasharray="58 76" transform="rotate(-90 16 16)"/><path d="M5 21 L11 18 L16 13 L27 12" fill="none" stroke="#dfe6ee" stroke-width="1.8"/><circle cx="16" cy="13" r="2" fill="#ffb020"/></svg>
+    <div class="brand-txt"><b>CHRONOLENS</b><span>Search by change events, not images</span></div>
+  </div>
+  <div class="top-mid">
+    <span class="lbl">AOI</span><span id="aoi-name" class="mono">AOI-01</span>
+    <span class="sep"></span>
+    <span class="lbl">WINDOW</span><span id="aoi-window" class="mono"></span>
+    <span class="sep"></span>
+    <span class="lbl">CRS</span><span id="aoi-crs" class="mono"></span>
+  </div>
+  <div class="top-right">
+    <span class="demo-tag" title="Curated demonstration index. Scenes are synthetic; the API contract is what the live pipeline plugs into.">DEMO INDEX · CURATED</span>
+    <div id="offline" class="offline" tabindex="0">
+      <i class="dot"></i><span>LOCAL / OFFLINE</span>
+      <div class="pop">
+        <div><span>Models</span><b>Local</b></div>
+        <div><span>Archive</span><b>Local</b></div>
+        <div><span>External APIs</span><b>None</b></div>
+        <div><span>External requests</span><b id="ext-req">0</b></div>
+        <div class="pop-sub" id="sys-counts"></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div id="app">
+  <aside id="rail">
+    <div class="rail-head">
+      <form id="qform" autocomplete="off" spellcheck="false">
+        <label class="lbl" for="q">NATURAL-LANGUAGE QUERY</label>
+        <div class="qbox">
+          <svg viewBox="0 0 20 20" width="16" height="16"><circle cx="8.5" cy="8.5" r="5.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M13 13l4.5 4.5" stroke="currentColor" stroke-width="1.5"/></svg>
+          <input id="q" type="text" placeholder="Ask the archive what changed…" />
+          <kbd>/</kbd>
+          <button type="submit" id="qgo">SEARCH</button>
+        </div>
+      </form>
+      <div id="suggest" class="suggest"></div>
+    </div>
+    <nav id="tabs" class="tabs" hidden>
+      <button data-tab="results" class="on"><span>RESULTS</span><i id="n-results">0</i></button>
+      <button data-tab="suppressed"><span>⊘ WHY WE DIDN'T ALERT</span><i id="n-supp">0</i></button>
+      <button data-tab="audit"><span>AUDIT</span><i id="n-audit">0</i></button>
+    </nav>
+    <div id="rail-body" class="rail-body"></div>
+  </aside>
+
+  <main id="stage">
+    <div id="map"></div>
+    <svg id="arcs" aria-hidden="true"></svg>
+    <div id="vignette"></div>
+
+    <div id="hud-tl" class="hud">
+      <div id="lens-banner" class="lens-banner"></div>
+    </div>
+    <div id="hud-tr" class="hud">
+      <div class="seg" id="sensor-seg" role="tablist" aria-label="Base imagery">
+        <button data-v="s2" class="on"><i class="k s2"></i>S2</button>
+        <button data-v="s1"><i class="k s1"></i>S1</button>
+        <button data-v="fused">FUSED</button>
+      </div>
+      <div class="seg lens-seg" id="lens-seg" title="Compare a conventional two-date difference with ChronoLens">
+        <button data-v="conventional"><i class="k cv"></i>CONVENTIONAL</button>
+        <button data-v="chronolens" class="on"><i class="k al"></i>CHRONOLENS</button>
+      </div>
+    </div>
+    <div id="hud-bl" class="hud legend">
+      <span><i class="k al"></i>Change Event</span>
+      <span><i class="k s2"></i>Sentinel-2</span>
+      <span><i class="k s1"></i>Sentinel-1</span>
+      <span><i class="k ok"></i>Verified</span>
+      <span><i class="k cv"></i>Suppressed</span>
+    </div>
+    <div id="lead" class="lead" hidden></div>
+    <div id="coords" class="coords mono"></div>
+  </main>
+
+  <section id="dossier" class="dossier" hidden></section>
+</div>
+
+<footer id="chrono"></footer>
+<div id="tip" class="tip" hidden></div>
+<div id="toasts"></div>
+
+<script src="/static/vendor/maplibre-gl.js"></script>
+<script type="module" src="/static/js/main.js"></script>
+</body>
+</html>

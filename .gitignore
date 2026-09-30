@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+backend/state.json
+server_log.txt
+server_err.txt
+.DS_Store
